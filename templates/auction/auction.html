@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <div class="auction_img">
+                <img src="/media/{{product.product_img}}">
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="auction_details">
+                <table class="table table-dark">
+                    <tbody>
+                        <tr>
+                        <td>{{product.product_name}}</td>
+                        </tr>
+                        <tr>
+                        <td>Current Value: {{product.current_val}}</td>
+                        </tr>
+                        <tr>
+                        <td>Start Time: {{product.start_time}}</td>
+                        </tr>
+                        <tr>
+                        <td>End Time: {{product.end_time}}</td>
+                        </tr>
+                        <tr>
+                        <td>{{product.product_desc}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6"></div>
+        <div class="col-6">
+            <h5>Powered By</h5>
+            <marquee behavior="scroll">
+            <img src="/media/{{product.product_img}}" truespeed="150" hspace="10px" alt="..." />
+            <img src="/media/{{product.product_img}}" height="100" alt="..." />
+            <img src="/media/{{product.product_img}}" height="100" alt="..." />
+            </marquee>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6"></div>
+        <div class="col-6">
+            <h5 class="mt-5">Pace Your Bid</h5>
+            <form action="" method="post">
+                {% csrf_token %}
+                <input type="text" name="place_bid" class="form-control" id="">
+                <button type="submit" class="btn btn-primary my-2">Submit</button>
+            </form>
+            {% if msg %}
+                <h5 class="mt-5">{{msg}}</h5>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock  %}

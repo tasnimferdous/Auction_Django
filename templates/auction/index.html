@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if messages %}
+    {% for message in messages %}
+<div class="alert alert-{{ message.tags }} alert-dismissible">
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    {{ message }}
+  </div>
+{% endfor %}
+{% endif %}
+
+    <div class="container">
+        <div class="main_bg">
+            <!--Home Page Coding Starts Here-->
+
+            {% for prod in products %}
+                {% if forloop.counter|divisibleby:2 %}
+                    <div class="row">
+                        <div class="col">
+                            <div class="card right_pos" style="width: 18rem;">
+                            <img class="card-img-top" src="media/{{prod.product_img}}">
+                            <div class="card-body">
+                                <h3 class="card-title">{{prod.product_name}}</h3>
+                                <h5 class="card-title">Current Value: {{prod.current_val}}</h5>
+                                <p class="card-text"><b>Auction Start Time: </b>{{prod.start_time}}</p>
+                                <p class="card-text"><b>Auction End Time: </b>{{prod.end_time}}</p>
+                                <p class="card-text">{{prod.product_desc|slice:"0:180"}}...</p>
+                                <a class="btn btn-primary" href="auction/{{prod.id}}">Place Bid</a>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="row">
+                        <div class="col">
+                            <div class="card left_pos" style="width: 18rem;">
+                            <img class="card-img-top" src="media/{{prod.product_img}}">
+                            <div class="card-body">
+                                <h3 class="card-title">{{prod.product_name}}</h3>
+                                <h5 class="card-title">Current Value: {{prod.current_val}}</h5>
+                                <p class="card-text"><b>Auction Start Time: </b>{{prod.start_time}}</p>
+                                <p class="card-text"><b>Auction End Time: </b>{{prod.end_time}}</p>
+                                <p class="card-text">{{prod.product_desc|slice:"0:120"}}...</p>
+                                <a class="btn btn-primary" href="auction/{{prod.id}}">Place Bid</a>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            <!--Home Page Coding Ends Here-->
+        </div>
+    </div>
+
+
+{% endblock  %}

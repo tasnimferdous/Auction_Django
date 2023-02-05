@@ -1,0 +1,43 @@
+.main_bg {
+    height: auto;
+    background-color: #fff9ee;
+    max-width: 950px;
+    margin: auto;
+}
+
+.left_pos {
+    left: -100px;
+}
+
+.right_pos {
+    right: -100px;
+    float: right;
+}
+
+.card-img-top{
+    width: auto;
+    max-height: 200px;
+}
+
+.auction_img, .auction_details{
+    margin-top: 50px;
+}
+
+.auction_img img{
+    height: 300px;
+    width: 80%;
+}
+
+marquee img{
+    margin: 0 25px;
+    height: 80px;
+    width: 150px;
+}
+
+marquee {
+    background-color: #fff9ee;
+}
+
+.center_item{
+    margin-top: 15%;
+}
