@@ -30,10 +30,15 @@
                 <li class="nav-item">
                 <a class="nav-link" href="#">Contact Us</a>
                 </li>
+                 {%if request.user.is_authenticated and request.session.usertype == "Seller" %}
                 <li class="nav-item">
-                <a class="nav-link" href="#">Dashboard</a>
+                <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
                 </li>
-                
+                {% elif request.user.is_authenticated and request.session.usertype == "Buyer" %}
+                <li class="nav-item">
+                <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                </li>
+                {% endif %}
             </ul>
 
               <form class="d-flex">
