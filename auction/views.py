@@ -26,33 +26,39 @@ def auction(request,prod_id):
             user = request.user
             bid_value = int(request.POST.get('place_bid'))
             bid_time = datetime.datetime.now()
-            if bid_time > product.start_time and bid_time < product.end_time:
-                print(bid_value )
-                if bid_value > int(product.current_val):
-                    product.current_val = bid_value
-                    last_bid_val = bid_value
-                    product.save(update_fields=['current_val'])
-                    msg = "Bid placed successfully!"
-                    context = {
-                        'product': product,
-                        'msg': msg,
-                    }
-                    bid = Auction(product = product, user = user, last_bid_val = bid_value, last_bid_time = bid_time)
-                    bid.save()
+            if user.last_name == "Buyer":
+                if bid_time > product.start_time and bid_time < product.end_time:
+                    if bid_value > int(product.current_val):
+                        product.current_val = bid_value
+                        last_bid_val = bid_value
+                        product.save(update_fields=['current_val'])
+                        msg = "Bid placed successfully!"
+                        context = {
+                            'product': product,
+                            'msg': msg,
+                        }
+                        bid = Auction(product = product, user = user, last_bid_val = bid_value, last_bid_time = bid_time)
+                        bid.save()
+                    else:
+                        msg = "Please, place a higher bid!"
+                        context = {
+                            'product': product,
+                            'msg': msg,
+                        }
                 else:
-                    msg = "Please, place a higher bid!"
+                    msg = "Sorry! Time Limit Exceeded Or Yet To Start!"
                     context = {
                         'product': product,
                         'msg': msg,
                     }
             else:
-                msg = "Sorry! Time Limit Exceeded Or Yet To Start!"
+                msg = "You must sign in as a bidder to place a bid!"
                 context = {
                     'product': product,
                     'msg': msg,
                 }
         else:
-            msg = "Please, sign in to place a bid!"
+            msg = "Please, sign in as bidder to place a bid!"
             context = {
                 'product': product,
                 'msg': msg,
@@ -65,10 +71,8 @@ def auction(request,prod_id):
 def registration(request):
     if request.method == 'POST':
         fname = request.POST.get('fname')
-        lname = request.POST.get('lname')
         username = request.POST.get('username')
         email = request.POST.get('email')
-        phone = request.POST.get('phone')
         pass1 = request.POST.get('pass1')
         pass2 = request.POST.get('pass2')
         usertype = request.POST.get('usertype')
@@ -79,9 +83,7 @@ def registration(request):
                 if len(userexists) == 0:
                     user =  User.objects.create_user(username,email,pass1)
                     user.first_name = fname
-                    user.last_name = lname
-                    user.phone = phone
-                    user.usertype = usertype
+                    user.last_name = usertype
                     user.save()
                     messages.success(request, "Account created successfully!")
                     return redirect('login')
@@ -106,6 +108,7 @@ def signin(request):
         user = authenticate(username = username, password = password)
         if user:
             login(request, user)
+            request.session['usertype'] = request.user.last_name
             messages.success(request, "Sign In successful!")
             return redirect('home')
         else:
@@ -115,3 +118,17 @@ def signin(request):
 def signout(request):
     logout(request)
     return redirect('home')
+
+
+def dashboard(request):
+    context = {
+    }
+    
+    return render(request, 'auction/seller_dashboard.html', context)
+
+
+def profile(request):
+    context = {
+    }
+    
+    return render(request, 'auction/profile.html', context)
