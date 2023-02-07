@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Product</th>
+        <th scope="col">Price</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% if request.user.is_authenticated %}
+    {% for i in cart %}
+        <tr>
+        <td>{{i.product_name}}</td>
+        <td>{{i.current_val}}</td>
+
+        </tr>
+        
+    {% endfor %}
+    {% endif %}
+</tbody>
+</table>
+
+{% endblock  %}
+
+
+    
