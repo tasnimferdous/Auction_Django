@@ -16,3 +16,5 @@ class Auction(models.Model):
     user = models.ForeignKey(User , on_delete=models.CASCADE)
     last_bid_val = models.CharField(max_length=14)
     last_bid_time = models.DateTimeField(auto_now=False, auto_now_add=False, blank = True)
+
+    
